@@ -69,7 +69,7 @@ def parse_args():
         "--max_expansions",
         type=int,
         help="Max number of nonterminals to expand when generating a sentence",
-        default=450,
+        default=5,
     )
     # Print the derivation tree for each generated sentence
     parser.add_argument(
@@ -77,14 +77,14 @@ def parse_args():
         "--tree",
         action="store_true",
         help="Print the derivation tree for each generated sentence",
-        default=False,
+        default=True,
     )
     # Random seed
     parser.add_argument(
         "-se",
         "--seed",
         type= int,
-        default= 1,
+        default= 15,
     )
     return parser.parse_args()
 
@@ -152,14 +152,20 @@ class Grammar:
         """
         results = []
         total_expansions = 0
+        truncated = False
         if not derivation_tree:
             stack = [start_symbol]
             while stack:
                 if total_expansions >= max_expansions:
                     results.append("...")
-                    break
+                    
                 symbol = stack.pop()
                 if symbol in self.rules:
+                    if total_expansions >= max_expansions and len(stack)>=2:
+                        if results[-1] != "...":
+                            results.append("...")
+                        continue 
+                    
                     RHS = self.rng.choices(self.rules[symbol]["rules"], weights=self.rules[symbol]["weights"], k=1)[0]
                     total_expansions += 1
                     stack.extend(reversed(RHS))
@@ -167,20 +173,22 @@ class Grammar:
                     # terminate
                     results.append(symbol)
             return " ".join(results)
+        
         else:
             stack = [(start_symbol, "enter")]
             while stack:
-                if total_expansions >= max_expansions:
-                    results.append("...")
-                    break
-
                 symbol, state = stack.pop()
                 if state == "exit":
                     results.append(")")
                     continue
-
+                
                 # enter
                 if symbol in self.rules:
+                    if total_expansions >= max_expansions and len(stack)>=2:
+                        if results[-1] != "...":
+                            results.append("...")
+                        continue 
+                         
                     results.append(f"({symbol}")
                     stack.append((symbol, "exit"))
                     rhs = self.rng.choices(self.rules[symbol]["rules"],
@@ -188,7 +196,7 @@ class Grammar:
                     total_expansions += 1
                     for sym in reversed(rhs):
                         stack.append((sym, "enter"))
-                else:
+                else:                        
                     results.append(symbol)
 
             return " ".join(results)
