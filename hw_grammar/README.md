@@ -98,7 +98,6 @@ every chief of staff with the floor with the chief of staff under every floor un
              (Noun ...))
          ...)
       .)
-'
 
 (ROOT is
       it
