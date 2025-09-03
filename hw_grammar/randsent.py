@@ -42,8 +42,10 @@ def parse_args():
     parser.add_argument(
         "-g",
         "--grammar",
-        type=str, required=True,
+        type=str,
+        # required=True,
         help="Path to grammar file",
+        default="grammar.gr"
     )
     # Start symbol of the grammar
     parser.add_argument(
@@ -77,11 +79,18 @@ def parse_args():
         help="Print the derivation tree for each generated sentence",
         default=False,
     )
+    # Random seed
+    parser.add_argument(
+        "-se",
+        "--seed",
+        type= int,
+        default= 1,
+    )
     return parser.parse_args()
 
 
 class Grammar:
-    def __init__(self, grammar_file):
+    def __init__(self, grammar_file, seed=None):
         """
         Context-Free Grammar (CFG) Sentence Generator
 
@@ -94,7 +103,7 @@ class Grammar:
         # Parse the input grammar file
         self.rules = None
         self._load_rules_from_file(grammar_file)
-
+        self.rng = random.Random(seed)
     def _load_rules_from_file(self, grammar_file):
         """
         Read grammar file and store its rules in self.rules
@@ -107,7 +116,7 @@ class Grammar:
             for line in file:
                 if not line.strip():
                     continue
-                if line[0] == "#":
+                if line.startswith("#"):
                     continue
                 parts = line.strip().split()
 
@@ -146,12 +155,12 @@ class Grammar:
         if not derivation_tree:
             stack = [start_symbol]
             while stack:
-                if total_expansions > max_expansions:
+                if total_expansions >= max_expansions:
                     results.append("...")
                     break
                 symbol = stack.pop()
                 if symbol in self.rules:
-                    RHS = random.choices(self.rules[symbol]["rules"], weights=self.rules[symbol]["weights"], k=1)[0]
+                    RHS = self.rng.choices(self.rules[symbol]["rules"], weights=self.rules[symbol]["weights"], k=1)[0]
                     total_expansions += 1
                     stack.extend(reversed(RHS))
                 else:
@@ -161,7 +170,7 @@ class Grammar:
         else:
             stack = [(start_symbol, "enter")]
             while stack:
-                if total_expansions > max_expansions:
+                if total_expansions >= max_expansions:
                     results.append("...")
                     break
 
@@ -174,7 +183,7 @@ class Grammar:
                 if symbol in self.rules:
                     results.append(f"({symbol}")
                     stack.append((symbol, "exit"))
-                    rhs = random.choices(self.rules[symbol]["rules"],
+                    rhs = self.rng.choices(self.rules[symbol]["rules"],
                                      weights=self.rules[symbol]["weights"], k=1)[0]
                     total_expansions += 1
                     for sym in reversed(rhs):
@@ -193,8 +202,8 @@ def main():
     args = parse_args()
 
     # Initialize Grammar object
-    grammar = Grammar(args.grammar)
-
+    grammar = Grammar(args.grammar, args.seed)
+    
     # Generate sentences
     for i in range(args.num_sentences):
         # Use Grammar object to generate sentence
