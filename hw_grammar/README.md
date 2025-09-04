@@ -108,3 +108,39 @@ every chief of staff with the floor with the chief of staff under every floor un
              ...)
          ...)
       ?)
+
+2.1
+(1) The reason is that the basic grammar rules have some loops in it, which make recursive DFS hard to find a way out. Nonterminals are very likely to link to itself along the process, and make quick terminating less likely. With the given probability of each rule being used, this can be very common.
+
+VP -> VP PP is mainly responsible for this because it creates loops (left-recursive). It introduces another copy of the same nonterminal plus some extra material. If its probability of being used is not low, program will tend to generate very long sentences.
+
+(2)
+There is only one Adjective occurring in the grammar rule, Noun -> Adj Noun, and there is no rule that stipulate Adj -> Adj. Therefore, conjunction of multiple Adjs is impossible. Moreover, Since there are 5 Noun terminator, Noun -> Adj v.s. Noun terminator is 1:5, which make multiple adjectives rare.
+
+(3) It has to reduce the weight of the aforementioned 2 rules and increse the weight of the Noun ->Adj to make the sentences
+shorter and the adjectives more frequent.
+
+(4) 1. For Det, a more natural weight ratio should be 'the':'a':'every' = 5:4:1
+    2. For punctuation symbols, a period is more common than an exclamation or question mark. We change the ratio to 6:2:2.
+    3. For the Prep 'under' is less common than the rest.
+   
+(5) 
+a fine fine pickle kissed the pickled sandwich .
+
+is it true that every perplexed floor kissed the floor ?
+
+the pickled chief of staff kissed the perplexed pickled fine pickled pickle .
+
+a delicious perplexed floor pickled the pickled president in a fine chief of staff .
+
+the delicious fine pickled fine fine pickled pickled pickled president understood the sandwich .
+
+the chief of staff on every fine floor with a floor in the sandwich under a delicious perplexed floor kissed a pickled pickled pickled perplexed delicious pickled delicious pickle !
+
+a pickled pickle understood a floor !
+
+a sandwich in the perplexed perplexed chief of staff understood a delicious fine floor .
+
+every perplexed pickled perplexed pickle kissed a floor on every pickled chief of staff on a pickled floor !
+
+a sandwich in the perplexed perplexed chief of staff understood a delicious fine floor .

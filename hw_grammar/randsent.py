@@ -69,7 +69,7 @@ def parse_args():
         "--max_expansions",
         type=int,
         help="Max number of nonterminals to expand when generating a sentence",
-        default=5,
+        default=450,
     )
     # Print the derivation tree for each generated sentence
     parser.add_argument(
@@ -77,7 +77,7 @@ def parse_args():
         "--tree",
         action="store_true",
         help="Print the derivation tree for each generated sentence",
-        default=True,
+        default=False,
     )
     # Random seed
     parser.add_argument(
@@ -152,20 +152,14 @@ class Grammar:
         """
         results = []
         total_expansions = 0
-        truncated = False
         if not derivation_tree:
             stack = [start_symbol]
             while stack:
                 if total_expansions >= max_expansions:
                     results.append("...")
-                    
+                    break
                 symbol = stack.pop()
                 if symbol in self.rules:
-                    if total_expansions >= max_expansions and len(stack)>=2:
-                        if results[-1] != "...":
-                            results.append("...")
-                        continue 
-                    
                     RHS = self.rng.choices(self.rules[symbol]["rules"], weights=self.rules[symbol]["weights"], k=1)[0]
                     total_expansions += 1
                     stack.extend(reversed(RHS))
