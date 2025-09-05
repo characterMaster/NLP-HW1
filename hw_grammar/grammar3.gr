@@ -1,0 +1,133 @@
+# Symbols in the grammar are case-sensitive.
+# 
+# This grammar uses a convention that
+#    - terminals are usually lowercase  (president)
+#    - preterminals are capitalized     (Noun)
+#    - other nonterminals are all-caps  (NP)
+# 
+# This convention just makes grammars more readable to humans.  Thus:
+#
+#    - When *you* are writing grammars in questions 3 and 6, you should 
+#      follow this convention unless you have a good reason not to.  
+#
+#    - But your *program* should still work with grammars that don't
+#      follow this convention.  So how can your program reliably tell
+#      the difference between terminal and nonterminal symbols?  If
+#      there is at least one rule for rewriting a symbol, then that
+#      symbol is a nonterminal and should be rewritten.
+#######################
+
+# Rules for creating full sentences.
+
+6	ROOT	S .
+2	ROOT	S !
+2   ROOT	is it true that S ?     # mixing terminals and nonterminals is ok.
+
+# The basic grammar rules.  Here's what the abbreviations stand for:
+#    S  = sentence
+#    NP = noun phrase
+#    VP = verb phrase
+#    PP = prepositional phrase
+#    Det = determiner (sometimes called "article")
+#    Prep = preposition
+#    Adj = adjective
+#    Adv = adverbs
+#    V_i = intransitive verbs
+#    V_t = transitive verbs
+#    V_clausal = clausal verbs
+#    Conj = conjunctions
+#    S' = clause
+#    Nbar = beginning with nouns, modifiers are stacked hierarchically
+#    AdjP = Adjective phrase
+#    V_np_sbar = Verbs requiring NP + Clause
+
+1   S   NP VP
+1   S   NP V_i
+1   S   NP V_t NP
+1   S   NP V_clausal S'
+1   S   NP VP Conj VP   # predicate coordination
+1   S   NP Conj NP VP   # subject coordination 
+1   S   S' V_t NP       # clausal subject
+1   S   NP V_np_sbar NP S'  # e.g., it perplexed NP that S
+
+# Clause
+1   S'    that S
+
+# VP
+1   VP    V_t NP
+1   VP    V_t NP PP
+1   VP    V_i
+1   VP    V_i PP
+1   VP    V_clausal S'
+1   VP    VP Conj VP
+1   VP    V_t Conj V_t NP   # eg. 'wanted and ate a sandwich'
+
+# Noun Phrases
+1   NP    Det Nbar
+1   NP    Name
+1   NP    NP PP
+1   NP    S'
+1   NP    NP Conj NP   # NP coordination
+1   NP    Pron         # pronoun 'it'
+
+1   Nbar    Noun
+1   Nbar    AdjP Nbar
+1   Nbar    Nbar PP
+
+# Adjective phrase
+1   AdjP    Adj
+1   AdjP    Adv AdjP
+
+# Prepositional phrase
+1   PP    Prep NP    
+
+# Vocabulary.  Your program can see that "ate" is a terminal
+# symbol because there exists no rule for rewriting it.
+# Any symbol that can rewrite as a terminal (or a string of 
+# terminals, like "chief of staff") is called a "preterminal."  Notice 
+# that a preterminal is a special kind of nonterminal.
+
+1   V_t    ate
+1	V_t    wanted
+1	V_t    kissed
+1	V_t	   understood
+1	V_t    pickled
+
+1   V_i    sighed
+1   V_i    worked
+
+1   V_clausal    thought
+
+1   V_np_sbar    perplexed 
+
+1	Det	the
+1	Det	a
+1	Det	every
+
+1	Noun	president
+1	Noun	sandwich
+1	Noun	pickle
+1	Noun	chief of staff
+1	Noun	floor
+1	Noun	proposal
+1	Noun	desk
+
+1	Adj	   fine
+1	Adj	   delicious
+1	Adj	   perplexed
+1	Adj    pickled
+
+1   Adv    very     
+
+1	Prep	with
+1	Prep	on
+1	Prep	under
+1   Prep    in
+
+1   Name    Sally 
+
+1   Conj    and
+
+1   Pron    it
+
+
