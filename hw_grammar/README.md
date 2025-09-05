@@ -145,5 +145,50 @@ every perplexed pickled perplexed pickle kissed a floor on every pickled chief o
 
 a sandwich in the perplexed perplexed chief of staff understood a delicious fine floor .
 
-2.2
+2.3
 (1) 
+In grammar3, I extended the baseline grammar (grammar2) to cover the phenomena required in Section 2.2. The main modifications are:
+
+Verb Subcategorization
+I introduced finer verb categories:
+V_i (e.g., sighed, worked), which cannot take an NP, preventing ungrammatical forms like sighed a pickle.
+V_t (e.g., ate, wanted), which take an NP object.
+V_clausal (e.g., thought), which take a sentential complement (that S).
+V_np_sbar (currently perplexed), which take both an NP and a sentential complement. This allows "it perplexed the president that a sandwich ate Sally" without overgenerating with other transitive verbs.
+
+That-Clauses (S')
+I added S' → that S, allowing embedding of sentences as complements or as NP-like constituents. I also allowed NP → S', so a that-clause can act as subject (That a sandwich ate Sally perplexed the president).
+
+Coordination
+I added subject coordination (S → NP Conj NP VP) and VP coordination (S → NP VP Conj VP, plus VP → VP Conj VP). I also allowed VP → Vt Conj Vt NP so multiple transitive verbs can share the same object (wanted and ate a sandwich).
+
+Recursive NP Structure
+Using an intermediate Nbar category, I enabled recursive adjective and PP modification of nouns (the very very perplexed president, every proposal on the desk).
+
+AdjP Recursion and PP Attachments
+I added AdjP → Adv AdjP for stacked intensifiers, and rules like NP → NP PP and VP → V_intrans PP to allow PP attachment at both NP and VP levels (worked on every proposal on the desk).
+
+Lexicon Extensions
+I added conjunctions (and), the pronoun it, name noun Sally, and the necessary nouns and adjectives to cover the example sentences.
+
+
+(2)
+a very fine pickle in Sally in a proposal and Sally worked .
+
+it thought that Sally ate a sandwich on that Sally under it sighed !
+
+is it true that Sally wanted it ?
+
+is it true that a very very perplexed chief of staff with Sally in Sally and Sally worked ?
+
+it thought that Sally worked .
+
+is it true that it sighed ?
+
+Sally sighed .
+
+the very perplexed chief of staff on it sighed on it .
+
+it worked on it .
+
+a proposal sighed .
