@@ -147,30 +147,31 @@ a sandwich in the perplexed perplexed chief of staff understood a delicious fine
 
 2.3
 (1) 
-In grammar3, I extended the baseline grammar (grammar2) to cover the phenomena required in Section 2.2. The main modifications are:
+In grammar3, we extended the baseline grammar (grammar2) to cover the phenomena required in Section 2.2. The main modifications are:
 
 Verb Subcategorization
-I introduced finer verb categories:
+ we introduced finer verb categories:
 V_i (e.g., sighed, worked), which cannot take an NP, preventing ungrammatical forms like sighed a pickle.
 V_t (e.g., ate, wanted), which take an NP object.
 V_clausal (e.g., thought), which take a sentential complement (that S).
 V_np_sbar (currently perplexed), which take both an NP and a sentential complement. This allows "it perplexed the president that a sandwich ate Sally" without overgenerating with other transitive verbs.
 
 That-Clauses (S')
-I added S' → that S, allowing embedding of sentences as complements or as NP-like constituents. I also allowed NP → S', so a that-clause can act as subject (That a sandwich ate Sally perplexed the president).
+ we added S' → that S, allowing embedding of sentences as complements or as NP-like constituents. Wealso allowed NP → S', so a that-clause can act as subject (That a sandwich ate Sally perplexed the president).
 
 Coordination
-I added subject coordination (S → NP Conj NP VP) and VP coordination (S → NP VP Conj VP, plus VP → VP Conj VP). I also allowed VP → Vt Conj Vt NP so multiple transitive verbs can share the same object (wanted and ate a sandwich).
+ we added subject coordination (S → NP Conj NP VP) and VP coordination (S → NP VP Conj VP, plus VP → VP Conj VP). Wealso allowed VP → Vt Conj Vt NP so multiple transitive verbs can share the same object (wanted and ate a sandwich).
 
 Recursive NP Structure
-Using an intermediate Nbar category, I enabled recursive adjective and PP modification of nouns (the very very perplexed president, every proposal on the desk).
+Using an intermediate Nbar category, we enabled recursive adjective and PP modification of nouns (the very very perplexed president, every proposal on the desk).
 
 AdjP Recursion and PP Attachments
-I added AdjP → Adv AdjP for stacked intensifiers, and rules like NP → NP PP and VP → V_intrans PP to allow PP attachment at both NP and VP levels (worked on every proposal on the desk).
+ We added AdjP → Adv AdjP for stacked intensifiers, and rules like NP → NP PP and VP → V_intrans PP to allow PP attachment at both NP and VP levels (worked on every proposal on the desk).
 
 Lexicon Extensions
-I added conjunctions (and), the pronoun it, name noun Sally, and the necessary nouns and adjectives to cover the example sentences.
+ We added conjunctions (and), the pronoun it, name noun Sally, and the necessary nouns and adjectives to cover the example sentences.
 
+In the meanwhile, we adjust the weights of some of the new rules that might create loops, such as VP -> V_clausal S' (S' -> that S) and Nbar -> AdjP Nbar.
 
 (2)
 a very fine pickle in Sally in a proposal and Sally worked .
@@ -196,11 +197,234 @@ a proposal sighed .
 2.4 
 (1) Neural hardware restores the grammar tree in another invisible way. It is trained (stimulated) on large text to capture the rule and grammer uderlying the sentences by years of accumulation. Memorization is conducted by the memory neuron unit in the human brain and is gradually formed.
 
-(2)Maybe, as long as there is an unnatural language corpus, which is very unlikely because nobody will create such a corpus. I think the way that human children learning a language and the way that NN learns it are very alike. They all read the books to gain such experience, and if the children are emerged in such 'unnatural language', I think they will still learn some pattern to understand such language. 
+(2)Maybe, as long as there is an unnatural language corpus, which is very unlikely because nobody will create such a corpus. Wethink the way that human children learning a language and the way that NN learns it are very alike. They all read the books to gain such experience, and if the children are emerged in such 'unnatural language', we think they will still learn some pattern to understand such language. 
 
-(3) I think it is because every language has its own pattern, and the tree-structed sentence is very easy for achieve high-efficient expression and make everyone else understand it more easily. Moreover, it is easy to generate more or even unseen sentences. Yes, due to the efficiency that human requires for communication. This has to do with the evolution. 
+(3) we think it is because every language has its own pattern, and the tree-structed sentence is very easy for achieve high-efficient expression and make everyone else understand it more easily. Moreover, it is easy to generate more or even unseen sentences. Yes, due to the efficiency that human requires for communication. This has to do with the evolution. 
 
 (4) 
 [1]It's good but with deawbacks. To some extent, grammar-based modeling is useful for generating legitimate sentences. However, it is too hard to construct the whole English linguistic system.
 [2]Yes, and this represents that grammer-based modeling is not perfect. 
 [3]The true semantics of a whole sentence, the context, and frequency of word being used.
+
+3.3
+(1) is missing
+(2) 
+sentence1: it and it worked in a chief of staff !
+tree:
+(ROOT (S (NP (Pron it))
+         (Conj and)
+         (NP (Pron it))
+         (VP (V_i worked)
+             (PP (Prep in)
+                 (NP (Det a)
+                     (Nbar (Noun chief
+                                 of
+                                 staff))))))
+      !)
+parser:
+(ROOT (S (NP (Pron it))
+         (Conj and)
+         (NP (Pron it))
+         (VP (V_i worked)
+             (PP (Prep in)
+                 (NP (Det a)
+                     (Nbar (Noun chief
+                                 of
+                                 staff))))))
+      !)
+sentence2:
+that a very very very perplexed chief of staff with it pickled Sally pickled it !
+tree:
+(ROOT (S (S' that
+             (S (NP (Det a)
+                    (Nbar (AdjP (Adv very)
+                                (AdjP (Adv very)
+                                      (AdjP (Adv very)
+                                            (AdjP (Adj perplexed)))))
+                          (Nbar (Nbar (Noun chief
+                                            of
+                                            staff))
+                                (PP (Prep with)
+                                    (NP (Pron it))))))
+                (V_t pickled)
+                (NP (Name Sally))))
+         (V_t pickled)
+         (NP (Pron it)))
+      !)
+parser:
+(ROOT (S (S' that
+             (S (NP (Det a)
+                    (Nbar (AdjP (Adv very)
+                                (AdjP (Adv very)
+                                      (AdjP (Adv very)
+                                            (AdjP (Adj perplexed)))))
+                          (Nbar (Nbar (Noun chief
+                                            of
+                                            staff))
+                                (PP (Prep with)
+                                    (NP (Pron it))))))
+                (V_t pickled)
+                (NP (Name Sally))))
+         (V_t pickled)
+         (NP (Pron it)))
+      !)
+
+sentence3:
+a sandwich perplexed a delicious proposal that the very delicious floor under Sally sighed .
+tree:
+(ROOT (S (NP (Det a)
+             (Nbar (Noun sandwich)))
+         (V_np_sbar perplexed)
+         (NP (Det a)
+             (Nbar (AdjP (Adj delicious))
+                   (Nbar (Noun proposal))))
+         (S' that
+             (S (NP (Det the)
+                    (Nbar (AdjP (Adv very)
+                                (AdjP (Adj delicious)))
+                          (Nbar (Nbar (Noun floor))
+                                (PP (Prep under)
+                                    (NP (Name Sally))))))
+                (V_i sighed))))
+      .)
+parser:
+(ROOT (S (NP (Det a)
+             (Nbar (Noun sandwich)))
+         (V_np_sbar perplexed)
+         (NP (Det a)
+             (Nbar (AdjP (Adj delicious))
+                   (Nbar (Noun proposal))))
+         (S' that
+             (S (NP (Det the)
+                    (Nbar (Nbar (AdjP (Adv very)
+                                      (AdjP (Adj delicious)))
+                                (Nbar (Noun floor)))
+                          (PP (Prep under)
+                              (NP (Name Sally)))))
+                (V_i sighed))))
+      .)
+discussion:
+The parser not always recover the original derivation. However, it is very accurate, there is only a mild difference when parsing the third sentence. The parser didn't parse this sentence is very likely that this sentence is not deterministic, which means that there are more than one ways to derive the original sentence. 
+
+(3)
+Basic mode is:
+   Det:Every -> Noun:sandwich -> Prep:with -> Det:a ->Noun:pickle -> Prep:on -> Det:the -> Noun:floor -> Prep:under -> Det:the -> Noun:chief of staff
+My possible derivation:
+    1.
+    (NP (NP (NP (Det every)
+                (Noun sandwich))
+            (PP (Prep with)
+                (NP (Det a)
+                    (Noun pickle))
+        (PP (Prep on)
+            (NP (Det the)
+                (Noun) floor))
+            (PP (Prep under)
+                (NP (Det the)
+                    (Noun chief
+                        of
+                        staff))))))
+    'with a pickle' is describing 'every sandwch', and this 'sandwich' is 'on th floor', where is 'under the chief of staff'.
+    2.
+    (NP (NP (NP (Det every)
+                (Noun sandwich))
+            (PP (Prep with)
+                (NP (Det a)
+                    (Noun pickle))
+                (PP (Prep on)
+                    (NP (Det the)
+                        (Noun) floor))
+        (PP (Prep under)
+            (NP (Det the)
+                (Noun chief
+                    of
+                    staff))))))
+    'every sandwich' and 'a pickle', which is 'on the floor', are 'under the chief of staff'.
+    3.
+    (NP (NP (Det every)
+            (Noun sandwich))
+        (PP (Prep with)
+            (NP (Det a)
+                (Noun pickle))
+            (PP (Prep on)
+                (NP (Det the)
+                    (Noun) floor))
+                (PP (Prep under)
+                    (NP (Det the)
+                        (Noun chief
+                                of
+                                staff)))))
+    'every sandwich' and 'a pickle' are 'on the floor', and the 'floor' is 'under the chief of staff'
+    4.
+    (NP (NP (Det every)
+            (Noun sandwich))
+        (PP (Prep with)
+            (NP (NP (Det a)
+                    (Noun pickle)))
+                (PP (Prep on)
+                    (NP (Det the)
+                        (Noun) floor))
+            (PP (Prep under)
+                (NP (Det the)
+                    (Noun chief
+                        of
+                        staff))))) 
+    'every sandwich' <- 'with a pickle' <- 'on the floor', is 'under the chief of staff'.
+    5.
+    (NP (NP (NP (NP (Det every)
+                    (Noun sandwich)))
+                (PP (Prep with)
+                    (NP (Det a)
+                        (Noun pickle)))
+            (PP (Prep on)
+                (NP (Det the)
+                    (Noun) floor))
+        (PP (Prep under)
+            (NP (Det the)
+                (Noun chief
+                    of
+                    staff)))))
+    'every sandwich' is 'with a pickle', 'on the floor', and 'under the chief'.
+
+(4).
+grammar.gr:
+every fine floor understood a sandwich .
+ (ROOT (S (NP (Det every) (Noun (Adj fine) (Noun floor))) (VP (Verb understood) (NP (Det a) (Noun sandwich)))) .)
+# number of parses = 1
+every perplexed floor kissed a chief of staff under the perplexed floor !
+ (ROOT (S (NP (Det every) (Noun (Adj perplexed) (Noun floor))) (VP (Verb kissed) (NP (NP (Det a) (Noun chief of staff)) (PP (Prep under) (NP (Det the) (Noun (Adj perplexed) (Noun floor))))))) !)
+# number of parses = 1
+every chief of staff with the floor with the chief of staff under every floor under the pickled president in a sandwich kissed the sandwich on a sandwich with the chief of staff on the president with a perplexed chief of staff on a perplexed president with a sandwich !
+ (ROOT (S (NP (NP (Det every) (Noun chief of staff)) (PP (Prep with) (NP (NP (Det the) (Noun floor)) (PP (Prep with) (NP (NP (NP (NP (Det the) (Noun chief of staff)) (PP (Prep under) (NP (Det every) (Noun floor)))) (PP (Prep under) (NP (Det the) (Noun (Adj pickled) (Noun president))))) (PP (Prep in) (NP (Det a) (Noun sandwich)))))))) (VP (Verb kissed) (NP (NP (Det the) (Noun sandwich)) (PP (Prep on) (NP (NP (Det a) (Noun sandwich)) (PP (Prep with) (NP (NP (Det the) (Noun chief of staff)) (PP (Prep on) (NP (NP (NP (Det the) (Noun president)) (PP (Prep with) (NP (NP (Det a) (Noun (Adj perplexed) (Noun chief of staff))) (PP (Prep on) (NP (Det a) (Noun (Adj perplexed) (Noun president))))))) (PP (Prep with) (NP (Det a) (Noun sandwich)))))))))))) !)
+# number of parses = 5544
+a pickle under the pickled chief of staff in the pickle with the sandwich in a sandwich in the president in every sandwich in the floor in the pickle on the floor with the pickled president on every perplexed delicious president pickled every president in every president in the fine pickle !
+ (ROOT (S (NP (NP (Det a) (Noun pickle)) (PP (Prep under) (NP (NP (NP (Det the) (Noun (Adj pickled) (Noun chief of staff))) (PP (Prep in) (NP (Det the) (Noun pickle)))) (PP (Prep with) (NP (NP (Det the) (Noun sandwich)) (PP (Prep in) (NP (NP (Det a) (Noun sandwich)) (PP (Prep in) (NP (NP (Det the) (Noun president)) (PP (Prep in) (NP (NP (Det every) (Noun sandwich)) (PP (Prep in) (NP (NP (Det the) (Noun floor)) (PP (Prep in) (NP (NP (NP (NP (Det the) (Noun pickle)) (PP (Prep on) (NP (Det the) (Noun floor)))) (PP (Prep with) (NP (Det the) (Noun (Adj pickled) (Noun president))))) (PP (Prep on) (NP (Det every) (Noun (Adj perplexed) (Noun (Adj delicious) (Noun president)))))))))))))))))))) (VP (Verb pickled) (NP (NP (NP (Det every) (Noun president)) (PP (Prep in) (NP (Det every) (Noun president)))) (PP (Prep in) (NP (Det the) (Noun (Adj fine) (Noun pickle))))))) !)
+# number of parses = 117572
+
+grammar3.gr:
+Sally perplexed a proposal that that it understood the sandwich pickled it .
+ (ROOT (S (NP (Name Sally)) (V_np_sbar perplexed) (NP (Det a) (Nbar (Noun proposal))) (S' that (S (S' that (S (NP (Pron it)) (V_t understood) (NP (Det the) (Nbar (Noun sandwich))))) (V_t pickled) (NP (Pron it))))) .)
+# number of parses = 6
+every very fine chief of staff with it perplexed a sandwich on Sally that Sally and a pickled floor wanted Sally .
+ (ROOT (S (NP (Det every) (Nbar (AdjP (Adv very) (AdjP (Adj fine))) (Nbar (Nbar (Noun chief of staff)) (PP (Prep with) (NP (Pron it)))))) (V_np_sbar perplexed) (NP (Det a) (Nbar (Nbar (Noun sandwich)) (PP (Prep on) (NP (Name Sally))))) (S' that (S (NP (Name Sally)) (Conj and) (NP (Det a) (Nbar (AdjP (Adj pickled)) (Nbar (Noun floor)))) (VP (V_t wanted) (NP (Name Sally)))))) .)
+# number of parses = 18
+
+is it true that that it and it worked sighed ?
+ (ROOT is it true that (S (NP (S' that (S (NP (Pron it)) (Conj and) (NP (Pron it)) (VP (V_i worked))))) (V_i sighed)) ?)
+# number of parses = 6
+It seems that the number parser gets larger when the generated sentence becomes longer. More precisely, since grammar.gr doesn't control the sentence length by reducing the weight of NP->NP PP (PP -> Prep NP), the loops are very likey to exist in the sentence, which induce many possible derivations. Compared to grammar1.gr, grammar3.gr controls the weight of rules that easily cause loop, sentences generated are tend to be shorter and thus have controled deviration number. However, due to the existence of clause and adjective phrase, the derivation number cannot be very low.
+
+(5)
+(a)
+~Because a sentence is constructed by multiple rules and vocabulary, each of which is attached with a probability. When the number of rules and vocabulary are large, those probabilities after being multiplied could be very small.   
+ ROOT	S . (1/3) * S   NP VP (1) * NP Det Noun (1/2) * the * (1/3) * president * (1/6) * VP	Verb NP (1) * ate (1/5) * the (1/3) * sandwich (1/6) = 1/19440 ~ 5.144e-5.
+~Because theree is only one parse of rules and vocabulary that can form this sentence. This makes p(sentence) = p(best parse).
+~This is a conditional probability that asks what's probability of the event best_parse happening given that randsent.py produce the sentence. It should be P (best_prse union sentence) / P (sentence). Since there is only one possible parsing of the sentence, the two probabilities should be equal, which results in 1.
+
+(b) This represents that there are two ways of parsing this sentence, and thus the p(best_parse | sentence) is 1:2 = 0.5.
+
+(c) -43.844 = log_2(p(sentence)= 5.144e-05 * p(sentence)= 1.240e-09) = log_2(5.144e-05) + log_2(1.240e-09) = -14.246 - 29.587 = 43.833. The log-prob is the odds that the 2 sentence are generated in this sequence after logarithm. And deviding by the total token number 18. The cross-entropy requires the difference to be positive, therefore another minus is in the front.  
+
+(d) The perplexity is taking the exponential of cross-entropy, which is 2^(ce) = 5.4076
+
+(e) Because 'the president ate .' ends with Vt, and this is not allowed from grammer.gr. The probability of producing this is 0, and log(0) is infinite. Therefore, it cannot be compressed well.

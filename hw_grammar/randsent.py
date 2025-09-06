@@ -84,7 +84,7 @@ def parse_args():
         "-se",
         "--seed",
         type= int,
-        default= 15,
+        default= random.randint,
     )
     return parser.parse_args()
 

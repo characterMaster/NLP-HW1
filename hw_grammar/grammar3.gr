@@ -58,7 +58,7 @@
 1   VP    V_t NP PP
 1   VP    V_i
 1   VP    V_i PP
-1   VP    V_clausal S'
+0.5   VP    V_clausal S'
 0.5   VP    VP Conj VP
 1   VP    V_t Conj V_t NP   # eg. 'wanted and ate a sandwich'
 
@@ -66,17 +66,17 @@
 1   NP    Det Nbar
 1   NP    Name
 0.3   NP    NP PP
-1   NP    S'
+0.3   NP    S'
 0.3   NP    NP Conj NP   # NP coordination
 1   NP    Pron         # pronoun 'it'
 
 1   Nbar    Noun
-1   Nbar    AdjP Nbar
-1   Nbar    Nbar PP
+0.3   Nbar    AdjP Nbar
+0.3   Nbar    Nbar PP
 
 # Adjective phrase
 1   AdjP    Adj
-1   AdjP    Adv AdjP
+0.3   AdjP    Adv AdjP
 
 # Prepositional phrase
 1   PP    Prep NP    
