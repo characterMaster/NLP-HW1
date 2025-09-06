@@ -206,6 +206,21 @@ a proposal sighed .
 [2]Yes, and this represents that grammer-based modeling is not perfect. 
 [3]The true semantics of a whole sentence, the context, and frequency of word being used.
 
+3.1
+(a) The other one is:
+ (ROOT (S (NP (NP (Det every) 
+                    (Noun sandwich)) 
+              (PP (Prep with)
+                  (NP (NP (Det a) 
+                       (Noun pickle))
+                       (PP (Prep on) 
+                           (NP (Det the) 
+                               (Noun floor)))))) 
+              (VP (Verb wanted) 
+                  (NP (Det a)
+                  (Noun president)))) 
+        .)
+(b) Yes, because different derivations represent that there are more than one way to interpret the senetence, which will produce ambiguity. Different interpretations can lead to completely different semantics. 
 3.3
 (1) is missing
 (2) 
