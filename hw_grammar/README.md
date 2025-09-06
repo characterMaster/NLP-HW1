@@ -192,3 +192,15 @@ the very perplexed chief of staff on it sighed on it .
 it worked on it .
 
 a proposal sighed .
+
+2.4 
+(1) Neural hardware restores the grammar tree in another invisible way. It is trained (stimulated) on large text to capture the rule and grammer uderlying the sentences by years of accumulation. Memorization is conducted by the memory neuron unit in the human brain and is gradually formed.
+
+(2)Maybe, as long as there is an unnatural language corpus, which is very unlikely because nobody will create such a corpus. I think the way that human children learning a language and the way that NN learns it are very alike. They all read the books to gain such experience, and if the children are emerged in such 'unnatural language', I think they will still learn some pattern to understand such language. 
+
+(3) I think it is because every language has its own pattern, and the tree-structed sentence is very easy for achieve high-efficient expression and make everyone else understand it more easily. Moreover, it is easy to generate more or even unseen sentences. Yes, due to the efficiency that human requires for communication. This has to do with the evolution. 
+
+(4) 
+[1]It's good but with deawbacks. To some extent, grammar-based modeling is useful for generating legitimate sentences. However, it is too hard to construct the whole English linguistic system.
+[2]Yes, and this represents that grammer-based modeling is not perfect. 
+[3]The true semantics of a whole sentence, the context, and frequency of word being used.

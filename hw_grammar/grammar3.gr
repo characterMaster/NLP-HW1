@@ -59,15 +59,15 @@
 1   VP    V_i
 1   VP    V_i PP
 1   VP    V_clausal S'
-1   VP    VP Conj VP
+0.5   VP    VP Conj VP
 1   VP    V_t Conj V_t NP   # eg. 'wanted and ate a sandwich'
 
 # Noun Phrases
 1   NP    Det Nbar
 1   NP    Name
-1   NP    NP PP
+0.3   NP    NP PP
 1   NP    S'
-1   NP    NP Conj NP   # NP coordination
+0.3   NP    NP Conj NP   # NP coordination
 1   NP    Pron         # pronoun 'it'
 
 1   Nbar    Noun
@@ -100,8 +100,8 @@
 
 1   V_np_sbar    perplexed 
 
-1	Det	the
-1	Det	a
+3	Det	the
+3	Det	a
 1	Det	every
 
 1	Noun	president
@@ -119,10 +119,10 @@
 
 1   Adv    very     
 
-1	Prep	with
-1	Prep	on
+3	Prep	with
+3	Prep	on
 1	Prep	under
-1   Prep    in
+3   Prep    in
 
 1   Name    Sally 
 
