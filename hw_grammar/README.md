@@ -455,3 +455,25 @@ The entropy of grammar2 is 2.211 bits per word (30104.365 / 13614)
 When the corpus is generated from grammar2, grammar2 assigns the highest probability to these sentences, because its rule set is more restrictive and exactly matches the distribution that produced the corpus. Thus its entropy (2.211 bits/word) is the lowest.
 By contrast, grammar3 includes all the sentences grammar2 can produce, plus many additional possibilities due to coordination, recursion, and sentential complements. Since there are more rules per nonterminal, the probability mass is spread over a larger set of derivations, so each individual sentence receives lower probability. As a result, the cross-entropy of grammar3 on grammar2’s corpus is higher than grammar2’s entropy.
 For the original grammar, the probability of producing shorter sentences (typical of grammar2’s corpus) is lower, since grammar tends to favor longer recursive expansions. Consequently, sentences from grammar2’s corpus are less probable under grammar, leading again to a higher cross-entropy value.
+
+4.1
+We have implemented (c) and (g) phenomena in grammar4.gr based on grammar3.gr. 
+(c) Relative Clauses
+To support relative clauses, I extended the grammar so that any noun phrase can be followed by a relative clause (NP → NP RelClause). I distinguished between two kinds of relative markers:
+RelPron (e.g., who, which), which behave as both connectors and syntactic constituents inside the clause (they can serve as subject or object).
+Comp (e.g., that), which only acts as a complementizer and does not itself fill a grammatical role.
+The rule RelClause -> RelPron S_rel | Comp S_rel allows both forms.
+To capture the phenomenon of gaps, I introduced a special sub-clause category S_rel. This has two variants:
+S_rel -> VP handles cases where the subject is missing (the man who __ ate the sandwich).
+S_rel -> NP VP_gap handles cases where the object is missing (the sandwich that the president ate __).
+Here VP_gap -> Vt ensures that a transitive verb can appear without its object only in this special environment.
+Finally, to allow recursive embedding like "the sandwich that the president thought that Sally ate", I added a sentential-complement rule VP_relcomp -> Vc Comp S_rel. This restricts embedding to verbs that normally take clausal complements (thought, believed, said).
+Together these changes let the grammar generate both subject-gap and object-gap relative clauses, with correct control over where gaps can occur.
+(g) Appositives
+To implement appositives, I added a rule allowing an NP to be expanded with a comma-delimited appositive phrase:
+NP -> NP , Appos ,
+The nonterminal Appos can expand in several ways:
+As another noun phrase (the president, the fine chief of staff,).
+As a relative clause, enabling non-restrictive relative clauses (Sally, who ate a sandwich,).
+As a fixed phrase such as an age expression (Sally, 59 years old,).
+This design ensures that appositives are treated as optional modifiers embedded inside noun phrases, marked explicitly with commas. Because the rule is recursive, multiple appositives can be stacked if desired.
