@@ -443,3 +443,15 @@ It seems that the number parser gets larger when the generated sentence becomes 
 (d) The perplexity is taking the exponential of cross-entropy, which is 2^(ce) = 5.4076
 
 (e) Because 'the president ate .' ends with Vt, and this is not allowed from grammer.gr. The probability of producing this is 0, and log(0) is infinite. Therefore, it cannot be compressed well.
+
+(6)
+(a) command use: python randsent.py -g .\grammar2.gr -n 1000 --seed 0 > .\corpus.txt; 
+                 Get-Content .\corpus.txt | perl .\parse -g .\grammar2.gr -P | perl .\prettyprint
+The entropy of grammar2 is 2.211 bits per word (30104.365 / 13614)
+(b) The entropy of grammar3 is 2.631 bits per word (61378.589 / 23328). Grammar 3 has higher entropy than grammar 2. This is natural because grammar3 introduces more structures, and these expansions enable Grammar3 to generate a greater variety of sentence patterns. The probability mass is distributed over more possible outputs. This means that Grammar3 can cover a larger sentence space, and thus the average uncertainty of each word is higher, so the entropy value is naturally higher than that of Grammar2.
+(c) For the original grammar.gr, the entropy is infinite. This is because the grammar allows unbounded recursion (e.g., NP → NP PP), so the generator often produces truncated sentences containing ... once the maximum expansion limit is reached. Since "..." is not part of the grammar, such sentences are assigned probability 0, yielding log-prob = −infinite and thus cross-entropy = infinite.
+
+(7)
+When the corpus is generated from grammar2, grammar2 assigns the highest probability to these sentences, because its rule set is more restrictive and exactly matches the distribution that produced the corpus. Thus its entropy (2.211 bits/word) is the lowest.
+By contrast, grammar3 includes all the sentences grammar2 can produce, plus many additional possibilities due to coordination, recursion, and sentential complements. Since there are more rules per nonterminal, the probability mass is spread over a larger set of derivations, so each individual sentence receives lower probability. As a result, the cross-entropy of grammar3 on grammar2’s corpus is higher than grammar2’s entropy.
+For the original grammar, the probability of producing shorter sentences (typical of grammar2’s corpus) is lower, since grammar tends to favor longer recursive expansions. Consequently, sentences from grammar2’s corpus are less probable under grammar, leading again to a higher cross-entropy value.
