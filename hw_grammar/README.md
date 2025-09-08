@@ -445,8 +445,8 @@ It seems that the number parser gets larger when the generated sentence becomes 
 (e) Because 'the president ate .' ends with Vt, and this is not allowed from grammer.gr. The probability of producing this is 0, and log(0) is infinite. Therefore, it cannot be compressed well.
 
 (6)
-(a) command use: python randsent.py -g .\grammar2.gr -n 1000 --seed 0 > .\corpus.txt; 
-                 Get-Content .\corpus.txt | perl .\parse -g .\grammar2.gr -P | perl .\prettyprint
+(a) Powershell command use: 1. python randsent.py -g .\grammar2.gr -n 1000 --seed 0 > .\corpus.txt; 
+                            2. Get-Content .\corpus.txt | perl .\parse -g .\grammar2.gr -P | perl .\prettyprint
 The entropy of grammar2 is 2.211 bits per word (30104.365 / 13614)
 (b) The entropy of grammar3 is 2.631 bits per word (61378.589 / 23328). Grammar 3 has higher entropy than grammar 2. This is natural because grammar3 introduces more structures, and these expansions enable Grammar3 to generate a greater variety of sentence patterns. The probability mass is distributed over more possible outputs. This means that Grammar3 can cover a larger sentence space, and thus the average uncertainty of each word is higher, so the entropy value is naturally higher than that of Grammar2.
 (c) For the original grammar.gr, the entropy is infinite. This is because the grammar allows unbounded recursion (e.g., NP → NP PP), so the generator often produces truncated sentences containing ... once the maximum expansion limit is reached. Since "..." is not part of the grammar, such sentences are assigned probability 0, yielding log-prob = −infinite and thus cross-entropy = infinite.
