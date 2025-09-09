@@ -477,3 +477,11 @@ As another noun phrase (the president, the fine chief of staff,).
 As a relative clause, enabling non-restrictive relative clauses (Sally, who ate a sandwich,).
 As a fixed phrase such as an age expression (Sally, 59 years old,).
 This design ensures that appositives are treated as optional modifiers embedded inside noun phrases, marked explicitly with commas. Because the rule is recursive, multiple appositives can be stacked if desired.
+
+Extra credit:
+In this part, we implemented the passive grammar. There are two main type of this grammar. For example, (1) `the pickle is eaten by the president .` and (2) `the sandwich eaten by Sally kissed the president .`. The first one is the most common passive structure with NP + Auxiliary verb + Ver, Past Participle (VBN) + NP. And the second passive structure that 'eaten by ...' is a reduced relative clasuse to describe the NP in front of it. 
+
+For the first one, we define the VBN as V_pt ('done by') since those passive verb are transitive, and we also define auxiliary verb Auxpass to construct 'be done by'. V_pt is added with the rule '(NP) VP Auxpass V_pt (NP)'. The second one is harder since it cannot be regarded as a Verb-based component. Therefore, we add this structure to the relative clause we defined previously. 
+We added 'RelClause   V_tp NP', which combined with 'NP VP' and 'NP NP RelClause' can form (2)  (ROOT (S (NP (NP (Det the) (Nbar (Noun sandwich))) (RelClause (V_tp eaten by) (NP (Name Sally)))) (V_t kissed) (NP (Det the) (Nbar (Noun president)))) .)
+
+Moreover, we can combine these two structure into (3) `the pickle kissed by the sandwich is eaten by the president .`, which is  (ROOT (S (NP (NP (Det the) (Nbar (Noun pickle))) (RelClause (V_tp kissed by) (NP (Det the) (Nbar (Noun sandwich))))) (VP (Auxpass is) (V_tp eaten by) (NP (Det the) (Nbar (Noun president))))) .)

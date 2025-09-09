@@ -58,7 +58,7 @@
 # VP
 1   VP    V_t NP
 1   VP    V_t NP PP
-1   VP    Auxpass Vt_p NP
+1   VP    Auxpass V_tp NP
 1   VP    V_i
 1   VP    V_i PP
 0.5   VP    V_clausal S'
@@ -92,11 +92,12 @@
 # Comp = subordinating conjunction
 # S_rel = Omission clause
 # VP_gap = A VP without an object
-1   NP    NP RelClause
+1   NP    NP    RelClause
 
 # relative clause
 1   RelClause   Comp S_rel
 1   RelClause   RelPron S_rel
+1   RelClause   V_tp NP
 
 # Omissing clauses (subject missing/object missing)
 1   S_rel    VP
@@ -145,21 +146,22 @@
 1   Num    59
 1   Noun   years
 
+1   Auxpass is
+1   Auxpass was
+1   Auxpass are
+1   Auxpass were
+
 1   V_t    ate
 1	V_t    wanted
 1	V_t    kissed
 1	V_t	   understood
 1	V_t    pickled
 
-1   Auxpass    was
-1   Auxpass    is
-1   Auxpass    were
-1   Auxpass    are
-
-1   Vt_p    eaten by  
-1   Vt_p    wanted by
-1   Vt_p    kissed by
-1   Vt_p    pickled by
+1   V_tp    eaten by
+1	V_tp    wanted by
+1	V_tp    kissed by
+1	V_tp	pickled by
+1	V_tp	understood by
 
 1   V_i    sighed
 1   V_i    worked
