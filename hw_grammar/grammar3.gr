@@ -66,7 +66,6 @@
 1   NP    Det Nbar
 1   NP    Name
 0.3   NP    NP PP
-0.3   NP    S'
 0.3   NP    NP Conj NP   # NP coordination
 1   NP    Pron         # pronoun 'it'
 
@@ -92,6 +91,7 @@
 1	V_t    kissed
 1	V_t	   understood
 1	V_t    pickled
+1	V_t    perplexed
 
 1   V_i    sighed
 1   V_i    worked
