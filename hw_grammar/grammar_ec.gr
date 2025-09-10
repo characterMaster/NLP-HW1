@@ -67,6 +67,7 @@
 
 # Noun Phrases
 1   NP    Det Nbar
+1   NP    Nbar
 1   NP    Name
 0.3   NP    NP PP
 0.3   NP    S'
@@ -104,9 +105,9 @@
 1   S_rel    NP VP_gap
 
 # Transitive verbs but without objects
-1   VP_gap    Vt
+1   VP_gap    V_t
 # Allow prepositional phrases to continue to expand to the right (e.g. ate with Sally)
-0.3    VP_gap    Vt PP
+0.3    VP_gap    V_t PP
 
 # Nesting "that + clause" (e.g.thought that Sally ate _ )
 1    VP_relcomp    V_clausal Comp S_rel
